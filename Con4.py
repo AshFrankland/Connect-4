@@ -64,6 +64,27 @@ def column_choice():
                 print()
                 c_choice = 0
 
+def win_check():
+    global win
+    #check horizontal lines
+    for i in grid_rows:
+        for j in range(4):
+            if i[j] != " " and i[j] == i[j + 1] and i[j] == i[j + 2] and i[j] == i[j + 3]:
+                win = 1
+    #check verticle lines
+    for i in range(7):
+        for j in range(3):
+            if grid_rows[j][i] != " " and grid_rows[j][i] == grid_rows[j + 1][i] and grid_rows[j][i] == grid_rows[j + 2][i] and grid_rows[j][i] == grid_rows[j + 3][i]:
+                win = 1
+    #check diagonals
+    for i in range(4):
+        for j in range(3):
+            if grid_rows[j][i] != " " and grid_rows[j][i] == grid_rows[j + 1][i + 1] and grid_rows[j][i] == grid_rows[j + 2][i + 2] and grid_rows[j][i] == grid_rows[j + 3][i + 3]:
+                win = 1
+    for i in range(3, 7):
+        for j in range(3):
+            if grid_rows[j][i] != " " and grid_rows[j][i] == grid_rows[j + 1][i - 1] and grid_rows[j][i] == grid_rows[j + 2][i - 2] and grid_rows[j][i] == grid_rows[j + 3][i - 3]:
+                win = 1
 
 print()
 print("Let's Play \u001b[36mConnect\u001b[31m 4\u001b[37m")
@@ -88,6 +109,12 @@ while turn_counter < 42 and win == 0:
     print()
     show_grid()
     print()
-    win_check = input("Did you win? ")
-    if win_check.lower() == "yes":
-        win = 1
+    win_check()
+
+if win == 1:
+    print("\u001b[3{}mPlayer {}\u001b[37m Wins".format(str(1 + (player_turn * 5)), str(player_turn + 1)))
+    print()
+else:
+    print("That's a Tie")
+    print()
+input("Press <ENTER> to end game")
