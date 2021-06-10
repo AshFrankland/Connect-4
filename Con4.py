@@ -17,8 +17,8 @@ import os
 
 os.system("cls||clear")
 
-red_token = "\u001b[31m0\u001b[37m"
-blue_token = "\u001b[36m0\u001b[37m"
+# red_token = "\u001b[31m0\u001b[37m"
+# blue_token = "\u001b[36m0\u001b[37m"
 row1 = [" ", " ", " ", " ", " ", " ", " ",]
 row2 = [" ", " ", " ", " ", " ", " ", " ",]
 row3 = [" ", " ", " ", " ", " ", " ", " ",]
@@ -39,6 +39,32 @@ def show_grid():
     print("|{}|{}|{}|{}|{}|{}|{}|".format(row1[0], row1[1], row1[2], row1[3], row1[4], row1[5], row1[6]))
     print("|1|2|3|4|5|6|7|")
 
+def column_choice():
+    c_choice = 0
+    while c_choice == 0:
+        c_choice = input("\u001b[3{}mPlayer {}\u001b[37m please choose a column: ".format(str(1 + (player_turn * 5)), str(player_turn + 1)))
+        if c_choice.isnumeric() == False:
+            print("Please write your choice as a number")
+            print()
+            c_choice = 0
+        elif int(c_choice) < 1 or int(c_choice) > 7:
+            print("That's not a valid column")
+            print()
+            c_choice = 0
+        else:
+            c_choice = int(c_choice)
+            if row6[c_choice - 1] == " ":
+                token_placed = 0
+                for i in grid_rows:
+                    if i[c_choice - 1] == " " and token_placed == 0:
+                        i[c_choice - 1] = "\u001b[3{}m0\u001b[37m".format(str(1 + (player_turn * 5)))
+                        token_placed = 1
+            else:
+                print("That column is full")
+                print()
+                c_choice = 0
+
+
 print()
 print("Let's Play \u001b[36mConnect\u001b[31m 4\u001b[37m")
 print()
@@ -55,4 +81,13 @@ while turn_counter < 42 and win == 0:
     print()
     show_grid()
     print()
-    input("press <ENTER> to continue")
+    column_choice()
+    os.system("cls||clear")
+    print()
+    print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
+    print()
+    show_grid()
+    print()
+    win_check = input("Did you win? ")
+    if win_check.lower() == "yes":
+        win = 1
