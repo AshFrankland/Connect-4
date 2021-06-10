@@ -26,6 +26,8 @@ row4 = [" ", " ", " ", " ", " ", " ", " ",]
 row5 = [" ", " ", " ", " ", " ", " ", " ",]
 row6 = [" ", " ", " ", " ", " ", " ", " ",]
 grid_rows = [row1, row2, row3, row4, row5, row6,]
+player_turn = 1
+win = "0"
 
 def show_grid():
     # Prints the grid with whatever tokens are in it
@@ -43,3 +45,13 @@ print()
 show_grid()
 print()
 input("Press <ENTER> to Continue")
+
+while win == "0":
+    player_turn = (player_turn + 1) % 2
+    os.system("cls||clear")
+    print()
+    print("\u001b[3{}mPlayer {}\u001b[37m's Turn".format(str(1 + (player_turn * 5)), str(player_turn + 1)))
+    print()
+    show_grid()
+    print()
+    win = input("press <ENTER> to end game")
