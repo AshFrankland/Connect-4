@@ -15,19 +15,8 @@ import os
 #|0|0|0|0| |0|0|
 #|1|2|3|4|5|6|7|
 
-os.system("cls||clear")
-
 # red_token = "\u001b[31m0\u001b[37m"
 # blue_token = "\u001b[36m0\u001b[37m"
-row1 = [" ", " ", " ", " ", " ", " ", " ",]
-row2 = [" ", " ", " ", " ", " ", " ", " ",]
-row3 = [" ", " ", " ", " ", " ", " ", " ",]
-row4 = [" ", " ", " ", " ", " ", " ", " ",]
-row5 = [" ", " ", " ", " ", " ", " ", " ",]
-row6 = [" ", " ", " ", " ", " ", " ", " ",]
-grid_rows = [row1, row2, row3, row4, row5, row6,]
-turn_counter = 0
-win = 0
 
 def show_grid():
     # Prints the grid with whatever tokens are in it
@@ -86,35 +75,78 @@ def win_check():
             if grid_rows[j][i] != " " and grid_rows[j][i] == grid_rows[j + 1][i - 1] and grid_rows[j][i] == grid_rows[j + 2][i - 2] and grid_rows[j][i] == grid_rows[j + 3][i - 3]:
                 win = 1
 
-print()
-print("Let's Play \u001b[36mConnect\u001b[31m 4\u001b[37m")
-print()
-show_grid()
-print()
-input("Press <ENTER> to Continue")
+player_scores = [0, 0,]
+play_again = 1
+yes_words = ["yes", "y", "ye", "yeah",]
+no_words = ["no", "n", "nope", "nah",]
 
-while turn_counter < 42 and win == 0:
-    player_turn = turn_counter % 2
-    turn_counter = turn_counter + 1
+while play_again == 1:
+    row1 = [" ", " ", " ", " ", " ", " ", " ",]
+    row2 = [" ", " ", " ", " ", " ", " ", " ",]
+    row3 = [" ", " ", " ", " ", " ", " ", " ",]
+    row4 = [" ", " ", " ", " ", " ", " ", " ",]
+    row5 = [" ", " ", " ", " ", " ", " ", " ",]
+    row6 = [" ", " ", " ", " ", " ", " ", " ",]
+    grid_rows = [row1, row2, row3, row4, row5, row6,]
+    turn_counter = 0
+    win = 0
+
     os.system("cls||clear")
+    if player_scores[0] > 0 or player_scores[1] > 0:
+        print("\u001b[31mPlayer 1\u001b[37m: {}     \u001b[36mPlayer 2\u001b[37m: {}".format(player_scores[0], player_scores[1]))
     print()
-    print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
+    print("Let's Play \u001b[36mConnect\u001b[31m 4\u001b[37m")
     print()
     show_grid()
     print()
-    column_choice()
-    os.system("cls||clear")
-    print()
-    print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
-    print()
-    show_grid()
-    print()
-    win_check()
+    input("Press <ENTER> to Continue")
 
-if win == 1:
-    print("\u001b[3{}mPlayer {}\u001b[37m Wins".format(str(1 + (player_turn * 5)), str(player_turn + 1)))
-    print()
-else:
-    print("That's a Tie")
-    print()
+    while turn_counter < 42 and win == 0:
+        player_turn = turn_counter % 2
+        turn_counter = turn_counter + 1
+        os.system("cls||clear")
+        if player_scores[0] > 0 or player_scores[1] > 0:
+            print("\u001b[31mPlayer 1\u001b[37m: {}     \u001b[36mPlayer 2\u001b[37m: {}".format(player_scores[0], player_scores[1]))
+        print()
+        print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
+        print()
+        show_grid()
+        print()
+        column_choice()
+        os.system("cls||clear")
+        if player_scores[0] > 0 or player_scores[1] > 0:
+            print("\u001b[31mPlayer 1\u001b[37m: {}     \u001b[36mPlayer 2\u001b[37m: {}".format(player_scores[0], player_scores[1]))
+        print()
+        print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
+        print()
+        show_grid()
+        print()
+        win_check()
+
+    if win == 1:
+        player_scores[player_turn] = player_scores[player_turn] + 1
+        os.system("cls||clear")
+        print("\u001b[31mPlayer 1\u001b[37m: {}     \u001b[36mPlayer 2\u001b[37m: {}".format(player_scores[0], player_scores[1]))
+        print()
+        print("Turn {} \u001b[3{}mPlayer {}\u001b[37m's Move".format(turn_counter, str(1 + (player_turn * 5)), str(player_turn + 1)))
+        print()
+        show_grid()
+        print()
+        print("\u001b[3{}mPlayer {}\u001b[37m Wins".format(str(1 + (player_turn * 5)), str(player_turn + 1)))
+        print()
+    else:
+        print("That's a Tie")
+        print()
+    
+    play_again = 2
+    while play_again == 2:
+        new_game = input("Would you like to play again? ")
+        if new_game.lower() in yes_words:
+            play_again = 1
+        elif new_game.lower() in no_words:
+            play_again = 0
+        else:
+            print("I didn't understand that")
+
+print()
 input("Press <ENTER> to end game")
